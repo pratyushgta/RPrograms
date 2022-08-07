@@ -1,0 +1,49 @@
+#Q1
+data("iris")
+head("iris")
+hist(iris$Sepal.Width,xlab="Sepal Width",main="Histogram of Sepal Width")
+
+#Q2
+dat = read.csv(file = "C:/Users/praty/Desktop/site_data.csv")
+dat
+
+boxplot(dat$Cu)
+
+#Q3
+Cit_dat = read.csv(file = "C:/Users/praty/Desktop/cities_dataX.csv")
+Cit_dat
+
+cName=c("Seattle","London","Tokyo","Berlin","Mumbai")
+
+barplot(Cit_dat$Sum, names.arg=cName, xlab="Cities",ylab="Sales", col="cyan", main="Total Sales Chart",border="black")
+
+#Q4
+data("swiss")
+head("Swiss")
+
+plot(x=swiss$Fertility, y=swiss$Catholic, main="Catholic Fertility", xlab="Fertility", ylab="Catholic")
+f1= factor(swiss$Catholic)
+print("Lowest fertility rates: ")
+summary(f1)
+
+plot(x=swiss$Education, y=swiss$Agriculture, main="Relation b/w Edu & Agri", xlab="Education", ylab="Agriculture")
+f2= factor(swiss$Catholic)
+
+
+
+#Q5
+v=c(10,20,30,40)
+v
+f=factor(v)
+f
+print("Changing ")
+levels(f)[1]=50
+f
+
+#Q6
+months=c("January","December","February","March","April","October","May","June",
+         "March","July","February","August","September","April","October",
+         "October","November","September","December","July")
+m = factor(months)
+print("Ordered factor: ")
+table(m)/summary(m)
