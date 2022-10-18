@@ -1,0 +1,381 @@
+###-A3: A-###
+
+#Q1. PDF of random variable X is: Find K, P(X<5), P(1<X<5) Write a R program for the above problem. Also write a R program to plot probability 
+distribution.
+install.packages("e1071")
+library(e1071)
+install.packages("distr")
+library(distr)
+f=function(k)((8*k*k)+7*k-1)
+uniroot(f,lower=0,upper=1)$root
+
+x=c(1,2,3,4,5,6,7)
+p=c(1/8,2/8,3/8,1/64,9/64,1/32,1/4)
+s=p[1]+p[2]+p[3]+p[4]
+s
+s1=s+p[5]
+s1
+
+barplot(p)
+#-------------------
+
+#Q2. A random variable X has the following pdf. Write a R program for the above problem. Also write a R program to plot cumulative 
+distribution function
+f=function(k)(3/5+6*k-1)
+uniroot(f,lower=0,upper=1)$root
+
+x=c(-2,-1,0,1,2,3)
+p=c(0.1,1/15,0.2,2/15,0.3,3/15)
+s=p[1]+p[2]+p[3]+p[4]
+s
+
+cd=cumsum(p)
+cd
+
+barplot(cd)
+#-------------------
+
+
+#Q3. A RV X has the following probability distribution: Find the probability distribution of V = X*X+1
+x=c(-2,-1,0,1,2)
+p=c(1/5,1/5,2/5,2/15,1/15)
+df = rbind(x*x+1)
+df
+
+barplot(df)
+#-------------------
+
+#Q4. Given the following distribution: Find Mean and Variance.
+x=c(-3,-2,-1,0,1,2)
+p=c(0.05,0.1,0.2,0.3,0.2,0.15)
+df = cbind(x*p)
+df
+
+mean=sum(x*p)
+mean
+
+Ex2=sum(x*x*p)
+var=Ex2-(mean*mean)
+var
+#-------------------
+
+#Q5. An urn contains 7 white and 3 red balls. Two balls are drawn together, at random 
+from this urn. Compute the expected number of white balls drawn
+x=c(0,1,2)
+p=c(1/15,7/15,7/15)
+sum(x*p)
+
+barplot(p)
+
+pd = cumsum(p)
+barplot(pd)
+#-------------------
+
+
+###-A3: B-###
+#Q1. The probability of entering students in chartered accountant
+will graduate is 0.5. Determine the probability that out of 10 
+students: None, One, Atleast one will graduate
+b=dbinom(0,10,0.5)
+b
+c=dbinom(1,10,0.5)
+c
+x = 1-b
+x
+#-------------------
+
+#Q2. Find binomial distribution if the mean is 5 and variance is 10/3.
+a = dbinom(0:15,15,1/3)
+a
+barplot(a)
+
+b=pbinom(0:15,15,1/3)
+b
+barplot(b)
+#-------------------
+
+#Q3. The number of traffic accidents that occur on a particular 
+stretch of road during a month follows a Poisson distribution 
+with a mean of 7.6. Find the probability that:
+ppois(2,7.6)
+a=ppois(3,7.6) - ppois(2,7.6)
+a
+#-------------------
+
+
+###-A4-###
+#Q1.i.In a sample of 1000 cases, the mean of a certain test is 14 and standard deviation is 2.5. 
+Assuming the distribution to be normal, find
+p1 = pnorm(15,mean=14,sd=2.5)
+p2 = pnorm(12,mean=14,sd=2.5)
+p=p1-p2
+print(paste("Students who scored between 12 & 15: ", p*1000))
+x = seq(0,20,by=0.1)
+y=dnorm(x,mean = 14,sd = 2.5)
+plot(x,y,type="l")
+abline(v=12)
+abline(v=15)
+#-------------------
+#Q1.ii.
+x1=18
+z=(x1-14)/2.5 #using normal distribution formula z=(x-mean)/sd
+p=pnorm(z)
+p
+pnorm(18,mean=14,sd=2.5)
+print(paste("Students who scored above 18: ", p*1000))
+
+x = seq(0,30,by=0.1)
+p=dnorm(x,mean = 14,sd = 2.5)
+plot(x,p,type="l")
+abline(v=18)
+#-------------------
+#Q1.iii
+x2=8
+z=(x2-14)/2.5 #using normal distribution formula z=(x-mean)/sd
+p=pnorm(z)
+print(paste("Students who scored between below: ", p*1000))
+x = seq(0,20,by=0.1)
+p=dnorm(x,mean = 14,sd = 2.5)
+plot(x,p,type="l")
+abline(v=8)
+#-------------------
+
+#Q2. In a male population of 1000, the mean height is 68.16 inches and standard deviation is 3.2 
+inches. How many men may be more than 6 feet (72 inches)?
+x1 = 72
+z=(x1-68.16)/3.2 #using normal distribution formula z=(x-mean)/sd
+p=pnorm(z)
+print(paste("Men more than 6 feet: ", p*1000))
+x = seq(50,80,by=0.1)
+p=dnorm(x,mean = 68.16,sd = 3.2)
+plot(x,p,type="l")
+abline(v=72)
+#-------------------
+
+#Q3. Assume that the diameters of 1000 brass plugs taken consecutively from a machine form a 
+normal distribution with mean 0.7515 inches and SD 0.0020 inches. How many of the plugs 
+are likely to be rejected if the diameter is to be 0.752 +-0.004 inches?  
+x1=0.725+0.004
+x2=0.752-0.004
+z1=(x1-0.7515)/0.0020
+z1
+z2=(x2-0.7515)/0.0020
+z2
+area1=0.4878
+area2=0.4599
+a=area1+area2
+a*1000
+print(paste("Brass plugs likely to be rejected: ", 1000-(a*1000)))
+#-------------------
+
+#Q4.i For a normally distributed variate X with mean 1 and s.d 3, find P (3.43<x<6.19)
+p1=pnorm(3.43,mean=1,sd=3)
+p2=pnorm(6.19,mean=1,sd=3)
+p2-p1
+#Isaac goddamn Newton
+#Q4.ii
+p1=pnorm(1.43,mean=1,sd=3)
+p2=pnorm(2.3,mean=1,sd=3)
+p2-p1
+#-------------------
+
+###-A5: MGF Skewness Kurtoisis-### 
+install.packages("moments")
+install.packages("e1071")
+install.packages("actuar")
+#Q1.Find the moment generating function, first four raw moments and the first four central moment.
+library("moments")
+x=c(0,1,2)
+p=c(1/3,1/3,1/3)
+##Raw Moments
+m0=1
+m1=sum(x*p)
+m2=sum(x^2*p)
+m3=sum(x^3*p)
+m4=sum(x^4*p)
+m=c(m0,m1,m2,m3,m4)
+m
+##Central Moments
+raw2central(m)
+#-------------------
+
+#Q2. The first three moments of the distribution about the value 3 
+of the random variable are 2, 10, -30 respectively. Find mean 
+variance and skewness.
+m=c(2,10,-30)
+A=3
+mean = m[1]+A
+mean
+var = m[2]-(m[1]^2)
+var
+skewness(m)
+#-------------------
+
+#Q3.  Find the moment generating function of X and then find mean and variance.
+x=c(0,1,2,3)
+p=c(1/8,3/8,3/8,1/8)
+mean=sum(x*p)
+mean
+Ex2=sum(x^2*p)
+var=Ex2-(mean*mean)
+var
+#-------------------
+
+#Q4. Find the first four moments about mean of the random variable X whose probability mass function is given by 
+x=c(-2,3,1)
+p=c(1/3,1/2,1/6)
+##Raw Moments
+m0=1
+m1=sum(x*p)
+m2=sum(x^2*p)
+m3=sum(x^3*p)
+m4=sum(x^4*p)
+m=c(m0,m1,m2,m3,m4)
+m
+##Central Moments
+raw2central(m)
+#-------------------
+
+
+###-A6: Correlation Regression-###
+library(ggplot2)
+#Q1. Two judges gave the following rank to a series of eight one 
+act plays in drama competition. Examine the relationship between 
+their judgments.
+judgeA = c(8,7,6,3,2,1,5,4)
+judgeB = c(7,5,4,1,3,2,6,8)
+cor(judgeA,judgeB,method="spearman")
+ggplot()+aes(x=judgeA,y=judgeB)+geom_point(colour="red")
+#-------------------
+
+#Q2. Calculate the rank correlation coefficient from the following data.
+height = c(60,62,64,66,68,70,72,74)
+weight = c(92,83,101,110,128,119,137,146)
+cor(height,weight,method="spearman")
+ggplot()+aes(x=height,y=weight)+geom_point(colour="red")
+#-------------------
+
+#Q3. Create a new dataframe, auto_num, that contains only columns with 
+numeric values from the auto dataset. You can do this using the 
+Filter function. Calculate correlation for all pairs of numeric 
+variables 
+install.packages("ISLR")
+install.packages("dplyr")
+library(ISLR)
+library(dplyr)
+head(Auto)
+auto_num = data.frame(Auto$mpg,Auto$cylinders,
+                      Auto$displacement,Auto$horsepower,Auto$weight,
+                      Auto$acceleration,Auto$year,Auto$origin)
+auto_num = data.frame(select_if(Auto,is.numeric))
+head(auto_num)
+cor(auto_num$mpg,auto_num$cylinders)
+cor(auto_num$mpg,auto_num$displacement)
+cor(auto_num$mpg,auto_num$horsepower)
+cor(auto_num$mpg,auto_num$weight)
+#-------------------
+
+#Q4. Use the cor function to create a matrix of correlation 
+coefficients for variables in the auto_num dataframe.
+data(Auto)
+df=data.frame(auto_num)
+head(df)
+cor(df)
+#-------------------
+
+#Q5. Use the cor function to create a matrix of correlation 
+coefficients for variables in the auto_num dataframe.
+X=c(62,64,65,69,70,71,72,74)
+Y=c(126,125,139,145,165,152,180,208)
+cor(X,Y)
+ggplot()+aes(x=X,y=Y)+geom_point(colour="red")
+#-------------------
+
+#Q6. Use the cor function to create a matrix of correlation 
+coefficients for variables in the auto_num dataframe.
+study=c(3,15,6,8,4,2,10)
+exam=c(75,95,65,70,85,80,65)
+cor(study,exam)
+ggplot()+aes(x=study,y=exam)+geom_point(colour="red")
+ggplot()+aes(x = study, y = exam)+geom_point()+stat_smooth(method = lm, col = "red")
+#-------------------
+
+
+###-A7: Correlation Regression-###
+#Q1. Find the most likely price in Mumbai corresponding to the price 
+of Rs. 70.00 at Calcutta from the following using correlation 
+coefficient as 0.75
+x=70
+x_bar=65
+y_bar=67
+sdx=2.5
+sdy=3.5
+r=0.75
+reg=r*sdy/sdx
+reg
+y=reg*(x-x_bar)+y_bar
+y
+#-------------------
+
+#Q2. The curb weight x in hundreds of pounds and braking distance y 
+in feet, at 50 miles per hour on dry pavement, were measured for 
+five vehicles, with the results shown in the table.
+x=c(25,27.5,32.5,35,45)
+y=c(105,125,140,140,150)
+n=5
+sumx=sum(x)
+sumx
+meanx=sumx/n
+meanx
+sumy=sum(y)
+sumy
+meany=sumy/n
+meany
+sum_x2=sum(x*x)
+sum_x2
+sum_y2=sum(y*y)
+sum_y2
+xy=sum(x*y)
+xy
+
+r = (xy-((sumx * sumy)/n))/sqrt((sum_x2-(sumx^2/n))*(sum_y2-(sumy^2/n)))
+r
+#or
+cor(x,y)
+#-------------------
+
+#Q3. For auto dataset, Use the lm() function to perform a multiple 
+linear regression with mpg as the response and all other variables 
+except name as the predictors.
+install.packages("ISLR")
+library("ISLR")
+data("Auto")
+head(Auto)
+m=lm(Auto$mpg~Auto$cylinders+Auto$displacement+Auto$horsepower+
+       Auto$weight+Auto$acceleration+Auto$year+Auto$origin)
+m
+summary(m)
+#-------------------
+
+#Q4. For carseats dataset, Fit a multiple regression model to predict 
+Sales using Price,Urban, and US
+data("Carseats")
+head(Carseats)
+m=lm(Carseats$Sales~Carseats$Price+Carseats$Urban+Carseats$US)
+m
+#-------------------
+
+#Q5. If the lines of regression of sample are x + 6y = 6 and 3x + 2y = 10.  
+a=rbind(c(1,6),c(3,2))
+b=c(6,10)
+solve(a,b,fractions=TRUE)
+byx=-1/6
+bxy=-2/3
+r=sqrt(byx*bxy)
+r
+#-------------------
+
+
+
+############-A8: Hypothesis-############
+Q1. 
