@@ -1,4 +1,4 @@
-###-A3: A-###
+############-A3 A: -############
 
 #Q1. PDF of random variable X is: Find K, P(X<5), P(1<X<5) Write a R program for the above problem. Also write a R program to plot probability 
 distribution.
@@ -72,7 +72,8 @@ barplot(pd)
 #-------------------
 
 
-###-A3: B-###
+############-A3 B: -############
+
 #Q1. The probability of entering students in chartered accountant
 will graduate is 0.5. Determine the probability that out of 10 
 students: None, One, Atleast one will graduate
@@ -103,7 +104,8 @@ a
 #-------------------
 
 
-###-A4-###
+############-A4: -############
+
 #Q1.i.In a sample of 1000 cases, the mean of a certain test is 14 and standard deviation is 2.5. 
 Assuming the distribution to be normal, find
 p1 = pnorm(15,mean=14,sd=2.5)
@@ -179,7 +181,9 @@ p2=pnorm(2.3,mean=1,sd=3)
 p2-p1
 #-------------------
 
-###-A5: MGF Skewness Kurtoisis-### 
+
+############-A5: MGF Skewness Kurtoisis-############
+
 install.packages("moments")
 install.packages("e1071")
 install.packages("actuar")
@@ -237,7 +241,8 @@ raw2central(m)
 #-------------------
 
 
-###-A6: Correlation Regression-###
+############-A6: Correlation Regression-############
+
 library(ggplot2)
 #Q1. Two judges gave the following rank to a series of eight one 
 act plays in drama competition. Examine the relationship between 
@@ -301,7 +306,8 @@ ggplot()+aes(x = study, y = exam)+geom_point()+stat_smooth(method = lm, col = "r
 #-------------------
 
 
-###-A7: Correlation Regression-###
+############-A7: Correlation Regression-############
+
 #Q1. Find the most likely price in Mumbai corresponding to the price 
 of Rs. 70.00 at Calcutta from the following using correlation 
 coefficient as 0.75
@@ -378,4 +384,231 @@ r
 
 
 ############-A8: Hypothesis-############
-Q1. 
+
+install.packages("distributions3")
+library(distributions3)
+
+#Q1. A machine is set to produce metal plates of thickness 1.5 cms 
+with standard deviation of 0.2 cm. A sample of 100 plates produced 
+by the machine gave an average thickness of 1.52 cms. Is the machine 
+fulfilling the purpose?
+x=1.52
+mu=1.5
+s=0.2
+n=100
+
+z_stat=(x-mu)/(s/sqrt(n))
+z_stat
+
+z=Normal(0,1)
+p_value=2*cdf(z,z_stat)
+p_value
+
+alpha=0.05
+if(p_value<alpha){
+  print("Reject the null hypothesis")
+}else{
+  print("Accept null hypothesis")
+}
+#-------------------
+
+#Q2. The average marks scored by 32 boys are 72 with SD of 8, while 
+that for 36 girls is 70 with SD of 6. Test at 1% LOS whether the 
+boys perform equal as girls.
+n1=32
+n2=36
+x1=72
+x2=70
+s1=8
+s2=6
+
+z_stat=(x1-x2)/sqrt(((s1)*(s1)/n1)+((s2)*(s2)/n2))
+z_stat
+
+Z=Normal(0,1.15)
+p_value=2*cdf(Z,1)
+p_value
+alpha=0.01
+if(p_value<alpha)
+{
+  print("Reject Null Hypothesis")
+}else{
+  print("Accept Null Hypothesis")
+}
+#-------------------
+
+#Q3.  The fatality rate of typhoid patients is believed to be 17.26%. 
+In a certain year 640 patients suffering from typhoid were treated 
+in a metropolitan hospital and only 63 patients died. Can you 
+consider the hospital efficient?
+p=prop.test(x=63, n = 640,p=0.1726, correct = FALSE, alternative = "less")
+p
+#H0:p=P
+#H1:p<P
+if(p$p.value<alpha){
+  print("Reject Null Hypothesis")
+} 
+#-------------------
+
+#Q4. 15.5% of a random sample of 1600 undergraduates were smokers, 
+where as 20% of a random sample of 900 postgraduates were smokers in 
+a states. Can we conclude that less number of undergraduates are 
+smokers than the postgraduates?
+
+p=prop.test(x = c(248,180), n = c(1600, 900),alternative = "less")
+p
+if(p$p.value<alpha){
+  print("Reject Null Hypothesis")
+} else{
+  print("Accept Null Hypothesis")
+}
+#-------------------
+
+#Q5. A random sample of 400 members is found to have a mean of 4.45 
+cm. Can it be reasonably regarded as a sample from a large 
+population whose mean is 5 cm and whose variance is 4 cms?
+n=400
+x=4.45
+mu=5
+s=2
+v=s^2
+# H0:mu=5
+# H1:mu≠5
+z_stat=(x-mu)/(s/sqrt(n))
+z_stat
+z=Normal(0,1)
+p_value=2*cdf(z,z_stat)
+p_value
+alpha=0.05
+if(p_value<alpha)
+{
+  print("Reject the null hypothesis")
+}else{
+  print("Accept null hypothesis")
+}
+#-------------------
+
+
+############-A9: Hypothesis-############
+
+#Q1. The annual rainfall at a certain place is normally distributed 
+with mean 30. If the rainfall during the past 8 years are 31.1, 
+30.7, 24.3, 28.1, 27.9, 32.2, 25.4 and 29.1, can we conclude that 
+average rainfall during the past 8 years is less than the normal 
+rainfall?
+x = c(31.1, 30.7, 24.3, 28.1, 27.9, 32.2, 25.4, 29.1)
+t = t.test(x, y = NULL, alternative = "less", 30, paired = FALSE, 0.95)
+t
+alpha = 0.05
+if(t$p.value < alpha){
+  print("Rejected Null Hypothesis")
+}else{
+  print("Accepted Null Hypothesis")
+}
+#-------------------
+
+#Q2. Can we conclude that the means of the two samples differ significantly?
+mean1 = 440
+mean2 = 460
+var1 = 40
+var2 = 42
+n1 = 16
+n2 = 25
+t2 = (mean1-mean2)/sqrt(((n1*var1 + n2*var2)/(n1+n2-2))*((1/n1)+(1/n2)))
+t2
+alpha2 = -2.023
+if(t2 < alpha2){
+  print("Rejected Null Hypothesis")
+}else{
+  print("Accepted Null Hypothesis")
+}
+#-------------------
+
+#Q3. The following data relate to the marks obtained by 11 students 
+in 2 tests, one held at the beginning of a year and the other at the 
+end of the year after intensive coaching.
+x = c(55, 60, 65, 75, 49, 25, 18, 30, 35, 54, 61, 72)
+y = c(63, 70, 70, 81, 54, 29, 21, 38, 32, 50, 70, 30)
+t = t.test(x, y, alternative = "less", 0, paired = FALSE, 0.95)
+t
+alpha = 0.05
+if(t$p.value < alpha){
+  print("Rejected Null Hypothesis")
+}else{
+  print("Accepted Null Hypothesis")
+}
+#-------------------
+
+#Q4.In a test given to two groups of students the marks obtained were 
+as follows. Examine the significant difference between the means of marks 
+secured by students of the above two groups.
+x = c(18, 20, 36, 50, 49, 36, 34, 49, 41)
+y = c(29, 28, 26, 65, 30, 44, 46)
+t = t.test(x, y, alternative = "two.sided", 0, paired = FALSE, 0.95)
+t
+alpha = 0.05
+if(t$p.value < alpha){
+  print("Rejected Null Hypothesis")
+}else{
+  print("Accepted Null Hypothesis")
+}
+#-------------------
+
+
+############-A10: Anova-############
+
+#Q1
+dat=read.csv("anovaq1.csv",header=TRUE,sep=",",dec=".")
+
+stdata=stack(dat)
+stdata
+
+anova=aov(values~ind,data=stdata) 
+anova
+summary(anova) 
+
+alpha=0.05 
+pvalue = 0.0089
+if(pvalue<alpha){ 
+  print("Reject the null hypothesis") 
+}else{
+  print("Accept null hypothesis") 
+}
+#-------------------
+
+#Q2 
+dat=read.csv("anovaq2.csv",header=TRUE,sep=",",dec=".")
+
+stdata=stack(dat)
+stdata
+
+anova=aov(values~ind,data=stdata) 
+anova
+summary(anova) 
+
+alpha=0.05 
+pvalue=0.0012
+if(pvalue<alpha){ 
+  print("Reject the null hypothesis") 
+}else{
+  print("Accept null hypothesis") 
+} 
+#-------------------
+
+#Q3
+dat=read.csv("anovaq3.csv",header=TRUE,sep=",",dec=".")
+
+stdata=stack(dat)
+stdata
+
+anova=aov(values~ind,data=stdata) 
+anova
+summary(anova) 
+
+alpha=0.05 
+pvalue=0.000849
+if(pvalue<alpha){ 
+  print("Reject the null hypothesis") 
+}else{
+  print("Accept null hypothesis") 
+}
